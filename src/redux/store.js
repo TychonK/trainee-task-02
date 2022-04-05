@@ -36,14 +36,7 @@ const initialState = {
             archived: true
         }
     ],
-    tableData: {
-            taskActive: 0,
-            taskArchived: 0,
-            ideaActive: 0,
-            ideaArchived: 0,
-            thoughtActive: 0,
-            thoughtArchived: 0
-    },
+    tableData: [],
 }
 
 const reducer = createReducer(initialState, {
@@ -53,11 +46,11 @@ const reducer = createReducer(initialState, {
             notes: [...state.notes, ...action.payload],
         };
     },
-    [actions.remove]: (state, action) => {
-        const newNotes = state.notes.filter(note => note.id != action.payload.id)
+    [actions.removeNote]: (state, action) => {
+        const newNotes = state.notes.filter(note => note.time !== state.notes[action.payload].time)
         return {
             ...state,
-            notes: newNotes
+            notes: newNotes,
         }
     },
     // [actions.edit]: (state, action) => {
@@ -78,12 +71,12 @@ const reducer = createReducer(initialState, {
     //         contacts: newContacts
     //     }
     // },
-    // [actions.changeTableData]: (state, action) => {
-    //     return {
-    //         ...state,
-    //         tableData: newTableData
-    //     }
-    // }
+    [actions.changeTableData]: (state, action) => {
+        return {
+            ...state,
+            tableData: action.payload
+        }
+    }
 })
 
 const store = configureStore({

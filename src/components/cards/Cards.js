@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-function Cards({ notesArr }) {
+function Cards({ notesArr, removeNote }) {
     const cardsMarkup = notesArr.map((note, index) => {
         return (
             <div key={index} className="card mx-4 my-2 bg-dark text-white thatsMyNote" style={{ width: 18 + 'rem' }}>
@@ -12,7 +12,7 @@ function Cards({ notesArr }) {
                     <p className="card-text text-info">Category: {note.category}</p>
                     <button id={index} className="btn btn-info">Edit</button>
                     <button id={index} className="btn btn-success ms-2">Archive</button>
-                    <button id={index} className="btn btn-danger ms-2">Delete</button>
+                    <button id={index} onClick={removeNote} className="btn btn-danger ms-2">Delete</button>
 				</div>
 			</div>
         )
@@ -29,4 +29,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Cards);
+const mapDispatchToProps = dispatch => {
+    return {
+        removeNote: (e) => dispatch(actions.removeNote(e.target.id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cards);
