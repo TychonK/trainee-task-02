@@ -61,13 +61,19 @@ const reducer = createReducer(initialState, {
     //         ...state,
     //         notes: newNotes,
     //     }
-    // },
-    // [actions.archive]: (state, action) => {
-    //     return {
-    //         ...state,
-    //         notes: newNotes,
-    //     }
-    // },
+    //},
+    [actions.archive]: (state, action) => {
+        const newNotes = state.notes.map((note) => {
+            if (note.id == action.payload) {
+               return {...note, archived: true};
+            }
+            return note
+        })
+        return {
+            ...state,
+            notes: newNotes,
+        }
+    },
     // [actions.unarchive]: (state, action) => {
     //     return {
     //         ...state,
