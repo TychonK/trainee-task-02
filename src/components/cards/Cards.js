@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-function Cards({ notesArr, removeNote, archiveNote }) {
+function Cards({ notesArr, removeNote, archiveNote, openModal }) {
     const allActive = notesArr.filter(note => note.archived == false)
     const cardsMarkup = allActive.map((note, index) => {
 
@@ -11,7 +11,7 @@ function Cards({ notesArr, removeNote, archiveNote }) {
                     <h6>{note.time}</h6>
                     <p className="card-text">{note.text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
                     <p className="card-text text-info">Category: {note.category}</p>
-                    <button id={note.id} className="btn btn-info">Edit</button>
+                    <button id={note.id} onClick={openModal} className="btn btn-info">Edit</button>
                     <button id={note.id} onClick={archiveNote} className="btn btn-success ms-2">Archive</button>
                     <button id={note.id} onClick={removeNote} className="btn btn-danger ms-2">Delete</button>
                 </div>
@@ -36,7 +36,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         removeNote: (e) => dispatch(actions.removeNote(e.target.id)),
-        archiveNote: (e) => dispatch(actions.archive(e.target.id))
+        archiveNote: (e) => dispatch(actions.archive(e.target.id)),
+        openModal: (e) => dispatch(actions.openModal(e.target.id))
     }
 }
 

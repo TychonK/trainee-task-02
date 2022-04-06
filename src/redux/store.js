@@ -40,6 +40,12 @@ const initialState = {
         }
     ],
     tableData: [],
+    modal: {
+        text: '',
+        category: '',
+        isOpen: false, 
+        id: '',
+    }
 }
 
 const reducer = createReducer(initialState, {
@@ -56,12 +62,37 @@ const reducer = createReducer(initialState, {
             notes: newNotes,
         }
     },
-    // [actions.edit]: (state, action) => {
-    //     return {
-    //         ...state,
-    //         notes: newNotes,
-    //     }
-    //},
+    [actions.closeModal]: (state, action) => {
+        const closedModal = {text: '', category: '', isOpen: false}
+        return {
+            ...state,
+            modal: closedModal
+        }
+    },
+    [actions.openModal]: (state, action) => {
+        const newModal = {
+            text: state.notes.filter(note => note.id == action.payload)[0].text,
+            category: state.notes.filter(note => note.id == action.payload)[0].category,
+            id: action.payload,
+            isOpen: true
+        }
+        return {
+            ...state,
+            modal: newModal
+        }
+    },
+    [actions.edit]: (state, action) => {
+        const newNotes = state.notes.map((note) => {
+            if (note.id == action.payload.id) {
+               return {...note, text: action.payload.text, category: action.payload.category};
+            }
+            return note
+        })
+        return {
+            ...state,
+            notes: newNotes,
+        }
+    },
     [actions.archive]: (state, action) => {
         const newNotes = state.notes.map((note) => {
             if (note.id == action.payload) {
