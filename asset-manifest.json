@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/trainee-task-02/static/css/main.179d2d83.css",
+    "main.js": "/trainee-task-02/static/js/main.bb4d23bf.js",
+    "index.html": "/trainee-task-02/index.html",
+    "main.179d2d83.css.map": "/trainee-task-02/static/css/main.179d2d83.css.map",
+    "main.bb4d23bf.js.map": "/trainee-task-02/static/js/main.bb4d23bf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.179d2d83.css",
+    "static/js/main.bb4d23bf.js"
+  ]
+}
