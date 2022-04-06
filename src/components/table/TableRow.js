@@ -48,7 +48,7 @@ function TableRow({ notesArr, onUpdate }) {
     }
     
     return (
-        tableMarkup(tableData)
+        tableData.length > 0 ? tableMarkup(tableData) : <h3 className="mt-3" style={{ color: 'grey', fontSize: 18 + 'px'} } >No data</h3>
     )
 }
 

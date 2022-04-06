@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
+import NothingToDisplay from './NothingToDisplay';
+
 function Cards({ notesArr, unarchiveNote }) {
     const allArchived = notesArr.filter(note => note.archived == true)
     const cardsMarkup = allArchived.map((note, index) => {
@@ -21,7 +23,7 @@ function Cards({ notesArr, unarchiveNote }) {
     });
     
     return (
-        cardsMarkup.length > 0 ? cardsMarkup : <h3 style={ { textAlign: 'center', color: 'grey',} }>Nothing to display</h3>
+        cardsMarkup.length > 0 ? cardsMarkup : <NothingToDisplay />
     )
 }
 
