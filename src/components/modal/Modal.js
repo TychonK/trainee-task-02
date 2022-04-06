@@ -6,7 +6,7 @@ import '@pnotify/core/dist/Angeler.css';
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 function Modal({ modalData, closeModal, submitEdit }) {
     const [text, setText] = useState(modalData.text);

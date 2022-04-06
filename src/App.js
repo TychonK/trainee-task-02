@@ -5,10 +5,11 @@ import './App.scss';
 import Cards from './components/cards/Cards';
 import Form from './components/form/Form';
 import Table from './components/table/Table';
-import Modal from './components/modal/Modal'
+import Modal from './components/modal/Modal';
+import ArchivedCards from './components/cards/ArchivedCards'
 
 
-function App({ modalData }) {
+function App({ modalData, showArchived }) {
 
   return (
     <div className="App container my-3">
@@ -16,7 +17,7 @@ function App({ modalData }) {
       <Form />
       <hr />
       <ul className="row container-fluid">
-        <Cards />
+        {showArchived ? <ArchivedCards /> : <Cards />}
       </ul>
       <hr />
       <Table />
@@ -26,7 +27,8 @@ function App({ modalData }) {
 
 const mapStateToProps = state => {
     return {
-        modalData: state.modal,
+      modalData: state.modal,
+      showArchived: state.showArchived
     }
 }
 

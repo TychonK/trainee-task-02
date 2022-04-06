@@ -11,6 +11,8 @@ import { useState } from 'react'
 
 import {v4 as uuid} from 'uuid'
 
+import Switch from './Switch'
+
 defaultModules.set(PNotifyMobile, {});
 defaults.closerHover = false;
 
@@ -71,10 +73,7 @@ function Form({ onSubmit }) {
                     </div>
                     <br />
                     <button id="addBtn" className="btn btn-primary" onClick={handleSubmit}>Add</button>
-                    <div className="form-check form-switch mt-3">
-                        <input className="form-check-input align-middle check-archived-switch" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-                        <label className="form-check-label align-middle ms-3" htmlFor="flexSwitchCheckDefault">Display archived notes</label>
-                    </div>
+                    <Switch />
                 </div>
             </div>
     )

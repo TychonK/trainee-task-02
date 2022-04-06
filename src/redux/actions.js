@@ -14,5 +14,8 @@ export const archive = createAction('note/ARCHIVE')
 export const unarchive = createAction('note/UNARCHIVE')
 
 
+export const toggleShowArchived = createAction('page/TOGGLE_SHOW_ARCHIVED')
+
+
 export const changeTableData = createAction('table/CHANGE_TABLE_DATA')
 

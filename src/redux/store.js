@@ -45,7 +45,8 @@ const initialState = {
         category: '',
         isOpen: false, 
         id: '',
-    }
+    },
+    showArchived: false,
 }
 
 const reducer = createReducer(initialState, {
@@ -105,12 +106,24 @@ const reducer = createReducer(initialState, {
             notes: newNotes,
         }
     },
-    // [actions.unarchive]: (state, action) => {
-    //     return {
-    //         ...state,
-    //         contacts: newContacts
-    //     }
-    // },
+    [actions.unarchive]: (state, action) => {
+        const newNotes = state.notes.map((note) => {
+            if (note.id == action.payload) {
+               return {...note, archived: false};
+            }
+            return note
+        })
+        return {
+            ...state,
+            notes: newNotes,
+        }
+    },
+    [actions.toggleShowArchived]: (state, action) => {
+        return {
+            ...state,
+            showArchived: !state.showArchived
+        }
+    },
     [actions.changeTableData]: (state, action) => {
         return {
             ...state,
