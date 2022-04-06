@@ -4,50 +4,53 @@ import * as actions from './actions'
 const initialState = {
     notes: [
         {
-            text: 'Lorem ipsum',
+            text: 'Lorem 06/01/2022 to 06/02/2022 ipsum',
             time: '2022-2-3 | 16:21',
             category: 'task',
-            archived: false
+            archived: false,
+            id: 1,
         },
         {
             text: 'Lorem ipsum',
             time: '2022-2-3 | 12:33',
             category: 'idea',
-            archived: false
+            archived: false,
+            id: 2,
         },
         {
             text: 'Lorem ipsum',
             time: '2022-2-2 | 11:33',
             category: 'random thought',
-            archived: false
+            archived: false,
+            id: 3,
         },
         {
             text: 'Lorem ipsum',
             time: '2022-2-1 | 13:53',
             category: 'idea',
-            dates: '2022-02-05 | 12:00',
-            archived: false
+            archived: false,
+            id: 4,
         },
         {
             text: 'Lorem ipsum',
             time: '2022-2-10 | 10:00',
             category: 'task',
-            dates: '2022-12-20 | 14:15',
-            archived: true
+            archived: true,
+            id: 5,
         }
     ],
     tableData: [],
 }
 
 const reducer = createReducer(initialState, {
-    [actions.add]: (state, action) => {
+    [actions.addNote]: (state, action) => {
         return {
             ...state,
-            notes: [...state.notes, ...action.payload],
+            notes: [...state.notes, action.payload],
         };
     },
     [actions.removeNote]: (state, action) => {
-        const newNotes = state.notes.filter(note => note.time !== state.notes[action.payload].time)
+        const newNotes = state.notes.filter(note => note.id != action.payload)
         return {
             ...state,
             notes: newNotes,
