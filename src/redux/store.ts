@@ -10,35 +10,35 @@ const initialState = {
             time: '2022-2-3 | 16:21',
             category: 'task',
             archived: false,
-            id: 1,
+            id: "1",
         },
         {
             text: 'Lorem ipsum',
             time: '2022-2-3 | 12:33',
             category: 'idea',
             archived: false,
-            id: 2,
+            id: "2",
         },
         {
             text: 'Lorem ipsum',
             time: '2022-2-2 | 11:33',
             category: 'random thought',
             archived: false,
-            id: 3,
+            id: "3",
         },
         {
             text: 'Lorem ipsum',
             time: '2022-2-1 | 13:53',
             category: 'idea',
             archived: false,
-            id: 4,
+            id: "4",
         },
         {
             text: 'Lorem ipsum',
             time: '2022-2-10 | 10:00',
             category: 'task',
             archived: true,
-            id: 5,
+            id: "5",
         }
     ],
     tableData: [],
@@ -54,14 +54,21 @@ const initialState = {
 const reducer = createReducer(initialState, (builder) =>
     builder
         .addCase(
-            actions.addNote, (state: State, action: PayloadAction<SubmitNote>) => {
-                state.notes.push(action.payload)  
+            actions.addNote, (state, action) => {
+                const newNote = action.payload
+                return {
+                    ...state,
+                    notes: [...state.notes, newNote]
+                }
             }
     )
         .addCase(
-            actions.removeNote, (state: State, action: PayloadAction<Id>) => {
+            actions.removeNote, (state, action) => {
                 const newNotes = state.notes.filter((note: any) => note.id != action.payload)
-                state.notes = newNotes
+                return {
+                    ...state,
+                    notes: newNotes
+                }
             }
     )
         .addCase(

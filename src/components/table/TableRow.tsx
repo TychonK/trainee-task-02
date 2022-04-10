@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-import React, { ReactComponentElement, useEffect } from 'react';
+import { useEffect } from 'react';
 import { SubmitNote, State } from '../../types';
 import { table } from 'console';
 import { AppDispatch } from '../../redux/store';

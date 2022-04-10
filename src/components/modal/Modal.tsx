@@ -1,12 +1,11 @@
-import { alert, defaultModules, defaults } from '@pnotify/core';
+import { alert } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
-import * as PNotifyMobile from '@pnotify/mobile';
 import '@pnotify/mobile/dist/PNotifyMobile.css';
 import '@pnotify/core/dist/Angeler.css';
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
-import { ChangeEvent, ChangeEventHandler, FormEvent, MouseEventHandler, useState, VoidFunctionComponent } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { ModalData, State, SubmitEdit } from '../../types';
 import { AppDispatch } from '../../redux/store';
 

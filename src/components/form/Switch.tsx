@@ -1,7 +1,13 @@
+import { ChangeEvent, ChangeEventHandler } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
+import { AppDispatch } from '../../redux/store'
 
-function Switch({ showArchived }) {
+interface Props {
+    showArchived: ChangeEventHandler<HTMLInputElement>
+}
+
+function Switch({ showArchived }: Props) {
     return (
             <div className="form-check form-switch mt-3">
                 <input className="form-check-input align-middle check-archived-switch" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={showArchived} />
@@ -11,7 +17,7 @@ function Switch({ showArchived }) {
 }
 
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
         showArchived: () => dispatch(actions.toggleShowArchived()),
     }

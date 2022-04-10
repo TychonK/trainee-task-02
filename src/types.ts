@@ -19,7 +19,7 @@ export type SubmitNote = {
     category: string;
     archived: boolean;
     time: string;
-    id: Id;
+    id: string;
 }
 
 export type SubmitEdit = {
