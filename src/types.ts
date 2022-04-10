@@ -1,5 +1,3 @@
-import { type } from "os";
-
 export type State = {
     notes: SubmitNote[],
     tableData: {[key: string]: {active: number, archived: number}}[],
@@ -11,7 +9,7 @@ export type ModalData = {
     text: string,
     category: string,
     isOpen: boolean, 
-    id: Id,
+    id: string,
 }
 
 export type Id = number | string;

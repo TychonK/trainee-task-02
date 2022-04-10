@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-import React, { useEffect } from 'react';
+import React, { ReactComponentElement, useEffect } from 'react';
 import { SubmitNote, State } from '../../types';
 import { table } from 'console';
 import { AppDispatch } from '../../redux/store';
@@ -31,7 +31,7 @@ const TableRow = ({ notesArr, onUpdate }: Props) => {
 
         const filteredCategories = uniqueCategories.map(uniqueCategory => {
             const obj = {
-                uniqueCategory: {
+                [uniqueCategory]: {
                     active: notesArr.filter((note) => note.category === uniqueCategory && note.archived === false).length,
                     archived: notesArr.filter((note) => note.category === uniqueCategory && note.archived === true).length
                 }
@@ -46,13 +46,14 @@ const TableRow = ({ notesArr, onUpdate }: Props) => {
 
     const tableMarkup = (tableData: TableData) => {
             const markup = tableData.map((category: Category, index: number) => {
-            const key = Object.keys(category)
+                const key = Object.keys(category)
+                const identifier = key[0]
 
            return (
                         <tr key={index}>
                             <th scope="row">{key}</th>
-                            <td>{category.key.active}</td>
-                            <td>{category.key.archived}</td>
+                            <td>{category[identifier].active}</td>
+                            <td>{category[identifier].archived}</td>
                         </tr>
                     )
         })
@@ -60,7 +61,7 @@ const TableRow = ({ notesArr, onUpdate }: Props) => {
     }
     
     return (
-        tableData.length > 0 ? tableMarkup(tableData) : <h3 className="mt-3" style={{ color: 'grey', fontSize: 18 + 'px'} } >No data</h3>
+        <>{ tableData.length > 0 ? tableMarkup(tableData) : <h3 className="mt-3" style={{ color: 'grey', fontSize: 18 + 'px' }} >No data</h3> }</>
     )
 }
 
