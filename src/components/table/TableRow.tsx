@@ -1,9 +1,21 @@
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { SubmitNote, State } from '../../types';
+import { table } from 'console';
+import { AppDispatch } from '../../redux/store';
 
-function TableRow({ notesArr, onUpdate }) {
+interface Props {
+    notesArr: SubmitNote[],
+    onUpdate: (data: TableData) => void,
+}
+
+type TableData = {[key: string]: {active: number, archived: number}}[]
+
+type Category = {[key: string]: {active: number, archived: number}}
+
+const TableRow = ({ notesArr, onUpdate }: Props) => {
     
     useEffect(() => {
         const data = getTableData()
@@ -19,9 +31,9 @@ function TableRow({ notesArr, onUpdate }) {
 
         const filteredCategories = uniqueCategories.map(uniqueCategory => {
             const obj = {
-                [uniqueCategory]: {
-                    active: notesArr.filter(note => note.category === uniqueCategory && note.archived === false).length,
-                    archived: notesArr.filter(note => note.category === uniqueCategory && note.archived === true).length
+                uniqueCategory: {
+                    active: notesArr.filter((note) => note.category === uniqueCategory && note.archived === false).length,
+                    archived: notesArr.filter((note) => note.category === uniqueCategory && note.archived === true).length
                 }
             }
             return obj
@@ -32,15 +44,15 @@ function TableRow({ notesArr, onUpdate }) {
 
     const tableData = getTableData()
 
-    const tableMarkup = (tableData) => {
-        const markup = tableData.map((category, index) => {
+    const tableMarkup = (tableData: TableData) => {
+            const markup = tableData.map((category: Category, index: number) => {
             const key = Object.keys(category)
 
            return (
                         <tr key={index}>
                             <th scope="row">{key}</th>
-                            <td>{category[key].active}</td>
-                            <td>{category[key].archived}</td>
+                            <td>{category.key.active}</td>
+                            <td>{category.key.archived}</td>
                         </tr>
                     )
         })
@@ -53,15 +65,15 @@ function TableRow({ notesArr, onUpdate }) {
 }
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: State) => {
     return {
         notesArr: state.notes,
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
-    onUpdate: (data) => dispatch(actions.changeTableData(data))
+    onUpdate: (data: TableData) => dispatch(actions.changeTableData(data))
   }
 }
 

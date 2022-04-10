@@ -8,12 +8,12 @@ function Cards({ notesArr, unarchiveNote }) {
     const cardsMarkup = allArchived.map((note, index) => {
 
         const markup =
-            <div key={index} className="card mx-4 my-2 bg-dark text-white thatsMyNote" style={{ width: 18 + 'rem' }}>
+            <div key={index} className="card mx-4 my-2 bg-secondary text-white thatsMyNote" style={{ width: 18 + 'rem' }}>
                 <div className="card-body">
                     <h6>{note.time}</h6>
                     <p className="card-text">{note.text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
                     <p className="card-text text-info">Category: {note.category}</p>
-                    <button id={note.id} onClick={unarchiveNote} className="btn btn-success ms-2">Unarchive</button>
+                    <button id={note.id} onClick={unarchiveNote} className="btn btn-success">Unarchive</button>
                 </div>
             </div>
         

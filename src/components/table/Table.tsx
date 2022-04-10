@@ -1,6 +1,3 @@
-import { connect } from 'react-redux'
-import * as actions from '../../redux/actions'
-
 import TableRow from './TableRow';
 
 function Table() {
