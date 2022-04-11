@@ -3,8 +3,32 @@ import * as actions from '../../redux/actions'
 
 import NothingToDisplay from './NothingToDisplay'
 
-function Cards({ notesArr, removeNote, archiveNote, openModal }) {
+import { SubmitNote, State } from '../../types'
+import { MouseEventHandler } from 'react'
+import { AppDispatch } from '../../redux/store'
 
+interface Props {
+    notesArr: SubmitNote[],
+    removeNote: (id: string) => void,
+    archiveNote: (id: string) => void,
+    openModal: (id: string) => void,
+}
+
+
+function Cards({ notesArr, removeNote, archiveNote, openModal }: Props) {
+
+    const handleOpenModal: MouseEventHandler<HTMLButtonElement> = (e) => {
+        openModal((e.target! as HTMLButtonElement).id)
+    }
+
+    const handleArchiveNote: MouseEventHandler<HTMLButtonElement> = (e) => {
+        archiveNote((e.target! as HTMLButtonElement).id)
+    }
+
+    const handleRemoveNote: MouseEventHandler<HTMLButtonElement> = (e) => {
+        removeNote((e.target! as HTMLButtonElement).id)
+    }
+    
     const allActive = notesArr.filter(note => note.archived == false)
 
     const dates = allActive.map(note => {
@@ -34,9 +58,9 @@ function Cards({ notesArr, removeNote, archiveNote, openModal }) {
                     <p className="card-text">{note.text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
                     <p className="card-text text-info">Category: {note.category}</p>
                     {dates[index].length > 0 ? <p className='card-text text-danger'>DATES: {dates[index]}</p> : null}
-                    <button id={note.id} onClick={openModal} className="btn btn-info">Edit</button>
-                    <button id={note.id} onClick={archiveNote} className="btn btn-success ms-2">Archive</button>
-                    <button id={note.id} onClick={removeNote} className="btn btn-danger ms-2">Delete</button>
+                    <button id={note.id} onClick={handleOpenModal} className="btn btn-info">Edit</button>
+                    <button id={note.id} onClick={handleArchiveNote} className="btn btn-success ms-2">Archive</button>
+                    <button id={note.id} onClick={handleRemoveNote} className="btn btn-danger ms-2">Delete</button>
                 </div>
             </div>
         
@@ -46,21 +70,21 @@ function Cards({ notesArr, removeNote, archiveNote, openModal }) {
     });
     
     return (
-        cardsMarkup.length > 0 ? cardsMarkup : <NothingToDisplay />
+        <>{ cardsMarkup.length > 0 ? cardsMarkup : <NothingToDisplay /> }</>
     )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: State) => {
     return {
         notesArr: state.notes,
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
-        removeNote: (e) => dispatch(actions.removeNote(e.target.id)),
-        archiveNote: (e) => dispatch(actions.archive(e.target.id)),
-        openModal: (e) => dispatch(actions.openModal(e.target.id))
+        removeNote: (id: string) => dispatch(actions.removeNote(id)),
+        archiveNote: (id: string) => dispatch(actions.archive(id)),
+        openModal: (id: string) => dispatch(actions.openModal(id))
     }
 }
 

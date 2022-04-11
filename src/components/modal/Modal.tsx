@@ -1,27 +1,34 @@
-import { alert, defaultModules, defaults } from '@pnotify/core';
+import { alert } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
-import * as PNotifyMobile from '@pnotify/mobile';
 import '@pnotify/mobile/dist/PNotifyMobile.css';
 import '@pnotify/core/dist/Angeler.css';
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
+import { ModalData, State, SubmitEdit } from '../../types';
+import { AppDispatch } from '../../redux/store';
 
-function Modal({ modalData, closeModal, submitEdit }) {
+interface Props {
+    modalData: ModalData,
+    closeModal: () => void,
+    submitEdit: (cred: SubmitEdit) => void,
+}
+
+function Modal({ modalData, closeModal, submitEdit }: Props) {
     const [text, setText] = useState(modalData.text);
     const [category, setCategory] = useState(modalData.category);
     const [noteId, setNoteId] = useState(modalData.id)
 
-    const handleNoteText = (e) => {
+    const handleNoteText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value)
     }
 
-    const handleNoteCategory = (e) => {
+    const handleNoteCategory = (e: ChangeEvent<HTMLSelectElement>) => {
         setCategory(e.target.value)
     }
 
-    const handleSubmitEdit = (e) => {
+    const handleSubmitEdit = (e: FormEvent) => {
         if (text === '') {
             alert({text: 'Please write something in your note', type: 'notice', delay: 2500, styling: 'angeler', icons: 'angeler'})
             return
@@ -31,19 +38,19 @@ function Modal({ modalData, closeModal, submitEdit }) {
         }
 
 
-        const editObj = { text: text, category: category, id: e.target.id }
+        const editObj = { text: text, category: category, id: (e.target as HTMLButtonElement).id }
 
         submitEdit(editObj)
 
         setCategory('')
         setText('')
-        setNoteId(null)
+        setNoteId('')
 
         closeModal()
     }
 
     return (
-       <div className="modal" tabIndex="-1" id="modal">
+        <div className="modal" tabIndex={-1} id="modal">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -72,16 +79,16 @@ function Modal({ modalData, closeModal, submitEdit }) {
    )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: State) => {
     return {
         modalData: state.modal,
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
         closeModal: () => dispatch(actions.closeModal()),
-        submitEdit: (editObj) => dispatch(actions.edit(editObj)),
+        submitEdit: (editObj: SubmitEdit) => dispatch(actions.edit(editObj)),
     }
 }
 

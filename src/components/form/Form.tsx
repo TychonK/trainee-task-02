@@ -7,25 +7,31 @@ import '@pnotify/core/dist/Angeler.css';
 
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import {v4 as uuid} from 'uuid'
 
 import Switch from './Switch'
+import { AppDispatch } from '../../redux/store';
+import { SubmitNote } from '../../types';
 
 defaultModules.set(PNotifyMobile, {});
 defaults.closerHover = false;
 
-function Form({ onSubmit }) {
+interface Props {
+    onSubmit: (noteObj: SubmitNote) => void,
+}
+
+function Form({ onSubmit }: Props) {
 
     const [text, setText] = useState('');
     const [category, setCategory] = useState('null');
 
-    const handleNoteText = (e) => {
+    const handleNoteText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value)
     }
 
-    const handleNoteCategory = (e) => {
+    const handleNoteCategory = (e: ChangeEvent<HTMLSelectElement>) => {
         setCategory(e.target.value)
     }
 
@@ -41,9 +47,9 @@ function Form({ onSubmit }) {
             return
         }
 
-        const id = uuid()
+        const id: string = uuid()
         
-        const obj = {
+        const obj: SubmitNote = {
             text: text,
             category: category,
             archived: false,
@@ -79,9 +85,9 @@ function Form({ onSubmit }) {
     )
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
-        onSubmit: (noteObj) => dispatch(actions.addNote(noteObj))
+        onSubmit: (noteObj: SubmitNote) => dispatch(actions.addNote(noteObj))
     }
 }
 

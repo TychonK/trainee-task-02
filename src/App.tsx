@@ -1,15 +1,21 @@
 import { connect } from 'react-redux'
 
 import './App.scss';
+import { State, ModalData } from './types';
 
 import Cards from './components/cards/Cards';
 import Form from './components/form/Form';
 import Table from './components/table/Table';
 import Modal from './components/modal/Modal';
-import ArchivedCards from './components/cards/ArchivedCards'
+import ArchivedCards from './components/cards/ArchivedCards';
+
+type Props = {
+  modalData: ModalData,
+  showArchived: boolean,
+}
 
 
-function App({ modalData, showArchived }) {
+function App({modalData, showArchived}: Props) {
 
   return (
     <div className="App container my-3">
@@ -25,7 +31,7 @@ function App({ modalData, showArchived }) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: State) => {
     return {
       modalData: state.modal,
       showArchived: state.showArchived
